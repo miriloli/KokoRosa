@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Service; 
+use App\Models\Customer;
+use App\Models\Employee;  
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -47,6 +49,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Pedicura constructiva',
             'price' => (50)
         ]);
+        Customer::factory(100)->create();
+
+        Employee::factory(6)->create();
+
         
+
+
     }
 }
