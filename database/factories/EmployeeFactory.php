@@ -24,8 +24,8 @@ class EmployeeFactory extends Factory
             'name' => fake()->name(),
             'surname' => fake()->lastname(),
             'password' => static::$password ??= Hash::make('password'),
-            'position' => 'manager',
-            'dni' => fake()->ein()
+            'position' => 'Encargado',
+            'dni' => fake()->dni()
         ];
     }
 }

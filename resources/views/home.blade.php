@@ -26,8 +26,6 @@
 
 
 
-
-
 <body>
 
     <div class="container p-5">
@@ -59,6 +57,9 @@
             <div class=" col-6 border text-center"> Calle Inventada Nº 14, 08009 Barcelona </div>
             <div class=" col-6 border text-center"> 600203040 </div>
         </div> 
+        <h2>
+            {{$services}}
+        </h2>
 
         <footer class="footer">
             <p>© Company 2024</p>

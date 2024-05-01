@@ -26,7 +26,7 @@ class CustomerFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
             //'remember_token' => Str::random(10),
-            'phone' => fake()->unique()->phoneNumber()
+            'phone' => fake()->unique()->mobileNumber()
         ];
     }
 }

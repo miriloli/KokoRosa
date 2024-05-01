@@ -43,4 +43,17 @@ class ServiceController extends Controller
             return response()->json(['error' => 'Error getting a service' . $e->getMessage()], 500);
         }
     }
+    public function getServicesView()
+    {
+        try {
+            $services = Service::all();
+            if ($services !== null) {
+               return view('home')->with('services',$services[0]->name);
+            } else {
+                return response()->json(['error' => 'Error. No services'], 400);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error getting services: ' . $e->getMessage()], 500);
+        }
+    }
 }
