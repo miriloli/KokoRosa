@@ -33,6 +33,7 @@ Route::controller(AppointmentController::class)->group(function () {
     Route::get('/appointments/{id}', 'getAppointmentById');
     //Route::post('/appointments', 'createAppointments');
     Route::put('/appointments/{id}', 'cancelAppointment');
+    Route::get('/timeSelection','timeSelection');
     
 });
 

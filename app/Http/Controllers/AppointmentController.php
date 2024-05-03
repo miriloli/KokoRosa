@@ -89,14 +89,10 @@ class AppointmentController extends Controller
         try {
             $date = $request->input('date');
 
-            $daysAvailable = $this->getDaysAvailable();
-            if (!in_array($date, $daysAvailable)) {
-                return view('error');
-            }
-
             $hoursAvailable = $this->getHoursAvailable($date);
+            
+            return $hoursAvailable;
 
-            return view('timeSelection', compact('date', 'hourAvailable'));
         } catch (\Exception $e) {
             return view('error');
         }
@@ -104,15 +100,13 @@ class AppointmentController extends Controller
     public function getHoursAvailable($date)
     {
         try {
-
-            
-
-
             $morningHours = ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30'];
             $afternoonHours = ['16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
+
             $appointments = Appointment::whereDate('date', $date)->get();
 
             $bookedHours = $appointments->pluck('hour')->toArray();
+            
             $availableHours = [];
 
             foreach ($morningHours as $hour) {
@@ -132,8 +126,8 @@ class AppointmentController extends Controller
             return [];
         }
     }
-   
-    public function getDaysAvailable()
+
+    /*public function getDaysAvailable()
     {
         try {
             $daysAvailable = [];
@@ -142,7 +136,7 @@ class AppointmentController extends Controller
 
             while ($today->lte($weekend)) {
                 if ($today->isWeekday()) {
-                    $daysAvailable[] = $today->format('d-m-y');
+                    $daysAvailable[] = $today->format('yyyy-mm-dd');
                 }
                 $today->addDay();
             }
@@ -151,5 +145,9 @@ class AppointmentController extends Controller
         } catch (\Exception $e) {
             return [];
         }
+    }*/
+
+    public function timeSelection(){
+        return view('timeSelection');
     }
 }

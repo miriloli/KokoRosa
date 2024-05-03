@@ -18,8 +18,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <style>
-       
-
         .border {
             border: 1px solid black;
             height: 150px;
@@ -58,7 +56,7 @@
         </div>
         <div class="container mt-5">
 
-            
+
             <div class="form-group">
                 <label for="datetimepicker">Seleccionar Fecha y Hora:</label>
                 <div class="input-group date" id="datetimepicker" data-target-input="nearest">
@@ -69,25 +67,39 @@
                 </div>
             </div>
 
-        
-            <button id="btn-submit" class="btn btn-primary" href="./timeSelection">Confirmar Cita</button>
+
+
+
+            <button id="btn-submit" class="btn btn-primary">Confirmar Cita</button>
         </div>
 
 
-       <script>
+        <script>
             const inputDate = document.getElementById('date');
-            const buttonConfirmation = document.getElementById('btn-submit');
-            buttonConfirmation.addEventListener('click', function() {
+
+            inputDate.addEventListener('change', function() {
                 let date = inputDate.value;
+
                 fetch('/appointments', {
+
                     method: 'POST',
                     headers: {
                         "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
                         'Content-Type': 'application/json'
 
                     },
-                    body: JSON.stringify({ appointmentDate: date })
-                }).then(response=>console.log(response));
+                    body: JSON.stringify({
+                        date: date
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('SUSMUERTOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',response.body);
+                        window.location.href = './timeSelection';
+                        console.log(response.body)
+                    } else {
+                        console.error('Error en la solicitud:', response.statusText);
+                    }
+                })
             })
         </script>
 

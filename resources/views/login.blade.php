@@ -37,33 +37,31 @@
 <body class="">
 
     <div class="container p-3">
-        <div class="header clearfix">
-            <nav>
-                <ul class="nav nav-pills float-right">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="./">Inicio <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./profile">Perfil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./appointments">Tus citas</a>
-                    </li>
-                </ul>
-            </nav>
 
-        </div>
 
         <div class="text-center py-3 my-3">
             <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" style="">
 
         </div>
-        <div>
-            @foreach ($services as $serv)
-            <p>
-                <a href="./daySelection" role="button">{{$serv->name}}</a>
-            </p>
-            @endforeach
+
+        <div class="row marketing text-center">
+            <form action="">
+                <div>
+                    <label for="Email">
+                        EMAIL
+                    </label>
+                    <input type="email">
+
+                </div>
+                <div>
+                    <label for="Password">
+                        CONTRASEÑA
+                    </label>
+                    <input type="password">
+
+                </div>
+            </form>
+
         </div>
 
         <footer class="footer">
