@@ -65,10 +65,10 @@
         @endforeach
        
         <footer class="footer">
-            <p>© Company 2024</p>
+            <p>© KokoRosa 2024</p>
         </footer>
 
-    </div> <!-- /container -->
+    </div> 
 
 
 </body>

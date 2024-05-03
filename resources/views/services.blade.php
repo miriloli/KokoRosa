@@ -60,13 +60,13 @@
         <div>
         @foreach ($services as $serv)
             <p>
-            <a href="./daySelection"role="button">{{$serv->name}}</a>
+            <a href="./daySelection" role="button">{{$serv->name}}</a>
         </p>
         @endforeach
         </div>
        
         <footer class="footer">
-            <p>© Company 2024</p>
+            <p>© KokoRosa 2024</p>
         </footer>
 
     </div> <!-- /container -->

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class AppointmentController extends Controller
@@ -89,65 +88,51 @@ class AppointmentController extends Controller
     {
         try {
             $date = $request->input('date');
-            
+
             $daysAvailable = $this->getDaysAvailable();
             if (!in_array($date, $daysAvailable)) {
-                return view('');
+                return view('error');
             }
-
 
             $hoursAvailable = $this->getHoursAvailable($date);
 
-
-            /* if (!in_array($hour, $hoursAvailable)) {
-            return view('');
-        }*/
-
-
-            return view('confirmation', compact('date', 'hour'));
+            return view('timeSelection', compact('date', 'hourAvailable'));
         } catch (\Exception $e) {
+            return view('error');
         }
     }
     public function getHoursAvailable($date)
     {
         try {
 
-            $HoursAvailable = [];
+            
 
 
             $morningHours = ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30'];
             $afternoonHours = ['16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
-            $appointments = Appointment::table('appointments')
-                ->where('date', $date)
-                ->get();
+            $appointments = Appointment::whereDate('date', $date)->get();
 
+            $bookedHours = $appointments->pluck('hour')->toArray();
+            $availableHours = [];
 
             foreach ($morningHours as $hour) {
-
-                if (!$this->appointmentExists($appointments, $hour)) {
-                    $HoursAvailable[] = $hour;
+                if (!in_array($hour, $bookedHours)) {
+                    $availableHours[] = $hour;
                 }
             }
 
             foreach ($afternoonHours as $hour) {
-                if (!$this->appointmentExists($appointments, $hour)) {
-                    $HoursAvailable[] = $hour;
+                if (!in_array($hour, $bookedHours)) {
+                    $availableHours[] = $hour;
                 }
             }
 
-            return $HoursAvailable;
+            return $availableHours;
         } catch (\Exception $e) {
+            return [];
         }
     }
-    private function appointmentExists($appointments, $hour)
-    {
-        foreach ($appointments as $appointment) {
-            if ($appointment->hour === $hour) {
-                return true;
-            }
-        }
-        return false;
-    }
+   
     public function getDaysAvailable()
     {
         try {
@@ -164,6 +149,7 @@ class AppointmentController extends Controller
 
             return $daysAvailable;
         } catch (\Exception $e) {
+            return [];
         }
     }
 }
