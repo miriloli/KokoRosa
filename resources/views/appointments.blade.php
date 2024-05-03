@@ -60,11 +60,9 @@
             </p>
         </div> 
 
-        <div class="row marketing text-center">
-
-            <div class=" col-6 border d-flex align-items-center justify-content-center"> Calle Inventada Nº 14, 08009 Barcelona </div>
-            <div class=" col-6 border d-flex align-items-center justify-content-center"> 600203040 </div>
-        </div> 
+        @foreach ($appointments as $appointment)
+            <p>{{$appointment->name}}</p>
+        @endforeach
        
         <footer class="footer">
             <p>© Company 2024</p>

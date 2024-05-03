@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Customer;
+
 
 
 class CustomerController extends Controller
@@ -39,4 +39,27 @@ class CustomerController extends Controller
             return response()->json(['error' => 'Failed to log in: ' . $e->getMessage()], 500);
         }
     }*/
+
+
+    public function getCustomerById(){
+
+
+        try {
+            $id=1;
+            if ($id !== null) {
+
+                $customer = Customer::where('id', $id)->first();
+                if ($customer !== null) {
+                    return view('profile', ['customer' => $customer]);
+                } else {
+                    return response()->json(['error' => 'Error getting a service: '], 400);
+                }
+            } else {
+                return response()->json(['error' => 'Error getting a service: '], 400);
+            }
+        } catch (\Exception $e) {
+
+            return response()->json(['error' => 'Error getting a service' . $e->getMessage()], 500);
+        }
+    }
 }

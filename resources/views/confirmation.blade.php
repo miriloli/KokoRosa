@@ -56,15 +56,19 @@
         <div class="text-center py-3 my-3">
             <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" style="">
             <p>
-                <a class="btn btn-lg btn-dark btn-cita" href="./services" role="button">Pedir cita</a>
+                <a class="btn btn-lg btn-dark btn-cita" href="" role="button">Pedir cita</a>
             </p>
         </div> 
 
-        <div class="row marketing text-center">
-
-            <div class=" col-6 border d-flex align-items-center justify-content-center"> Calle Inventada Nº 14, 08009 Barcelona </div>
-            <div class=" col-6 border d-flex align-items-center justify-content-center"> 600203040 </div>
-        </div> 
+        <p>
+            <!--Nombre del servicio escogido -->
+        </p>
+        <p>
+            <!-- dia escogido -->
+        </p>
+        <p>
+            <!-- hora escogida -->
+        </p>
        
         <footer class="footer">
             <p>© Company 2024</p>

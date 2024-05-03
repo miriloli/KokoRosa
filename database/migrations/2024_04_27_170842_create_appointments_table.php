@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->date('date');
+            $table->time('time');
             $table->boolean('cancelled');
-            $table->foreignIdFor(\App\Models\Customer::class);
+            $table->foreignIdFor(\App\Models\Customer::class);  
             $table->foreignIdFor(\App\Models\Employee::class);
             $table->foreignIdFor(\App\Models\Service::class);
 

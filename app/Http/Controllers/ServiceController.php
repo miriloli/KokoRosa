@@ -48,7 +48,7 @@ class ServiceController extends Controller
         try {
             $services = Service::all();
             if ($services !== null) {
-               return view('home')->with('services',$services[0]->name);
+                return view('services', ['services' => $services]);
             } else {
                 return response()->json(['error' => 'Error. No services'], 400);
             }
