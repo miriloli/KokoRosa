@@ -83,10 +83,11 @@
                 fetch('/appointments', {
                     method: 'POST',
                     headers: {
-                        "_token": $("meta[name='csrf-token']").attr("content"),
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
                         'Content-Type': 'application/json'
+
                     },
-                    body: JSON.stringify(date)
+                    body: JSON.stringify({ appointmentDate: date })
                 }).then(response=>console.log(response));
             })
         </script>
