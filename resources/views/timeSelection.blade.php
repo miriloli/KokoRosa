@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title></title>
 
-   
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
@@ -37,7 +37,7 @@
             <nav>
                 <ul class="nav nav-pills float-right">
                     <li class="nav-item">
-                        <a class="nav-link active" href="./">Inicio <span class="sr-only">(current)</span></a>
+                        <a class="nav-link active" href="./home">Inicio <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./profile">Perfil</a>
@@ -67,27 +67,13 @@
                 </div>
             </div>
 
-           
+            @foreach ($finallyAvailableHours as $hour)
+            <p>{{ $hour }}</p>
+            @endforeach
 
-        </div> 
+        </div>
 
 
-        <!-- <script>
-            const inputDate = document.getElementById('date');
-            const buttonConfirmation = document.getElementById('btn-submit');
-            buttonConfirmation.addEventListener('click', function() {
-                let date = inputDate.value;
-                fetch('/appointments', {
-                    method: 'POST',
-                    headers: {
-                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-                        'Content-Type': 'application/json'
-
-                    },
-                    body: JSON.stringify({ appointmentDate: date })
-                }).then(response=>console.log(response));
-            })
-        </script>-->
 
 
         <footer class="footer">

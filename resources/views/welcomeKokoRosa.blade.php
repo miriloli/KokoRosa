@@ -4,42 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Koko Rosa</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
 
-        <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-            <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
+    <div class="text-center py-3 my-3">
+        <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" style="">
 
-                    @if (Route::has('login'))
-                    <nav class="-mx-3 flex flex-1 justify-end">
-                        @auth
-                        <a href="{{ url('/home') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                            Dashboard
-                        </a>
-                        @else
-                        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                            Log in
-                        </a>
-
-                        @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                            Register
-                        </a>
-                        @endif
-                        @endauth
-                    </nav>
-                    @endif
-                </header>
-
-            </div>
-        </div>
     </div>
+
+    <div class="text-center py-3 my-3">
+        <header class="">
+
+            @if (Route::has('login'))
+            <nav class="">
+                @auth
+                <a href="{{ url('/home') }}" class="">
+                </a>
+                @else
+                <a href="{{ route('login') }}" class="">
+                    Acceder
+                </a>
+
+                @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="">
+                    Registrarse
+                </a>
+                @endif
+                @endauth
+            </nav>
+            @endif
+            @auth
+            <script>
+                window.location.href = "{{ url('/home') }}";
+            </script>
+            @endauth
+        </header>
+
+    </div>
+
 </body>
 
 </html>

@@ -37,7 +37,7 @@
             <nav>
                 <ul class="nav nav-pills float-right">
                     <li class="nav-item">
-                        <a class="nav-link active" href="./">Inicio <span class="sr-only">(current)</span></a>
+                        <a class="nav-link active" href="./home">Inicio <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./profile">Perfil</a>
@@ -70,7 +70,10 @@
 
 
 
-            <button id="btn-submit" class="btn btn-primary">Confirmar Cita</button>
+            <div id="availableHoursContainer">
+
+            </div>
+
         </div>
 
 
@@ -80,7 +83,7 @@
             inputDate.addEventListener('change', function() {
                 let date = inputDate.value;
 
-                fetch('/appointments', {
+                fetch('/appointment', {
 
                     method: 'POST',
                     headers: {
@@ -93,14 +96,17 @@
                     })
                 }).then(response => {
                     if (response.ok) {
-                        console.log('SUSMUERTOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',response.body);
-                        window.location.href = './timeSelection';
-                        console.log(response.body)
+                        return response.text();
                     } else {
                         console.error('Error en la solicitud:', response.statusText);
                     }
-                })
-            })
+                }).then(data => {
+                    
+                    document.open();
+                    document.write(data);
+                    document.close();
+                });
+            });
         </script>
 
 

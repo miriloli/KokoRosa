@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
-    public function getAppointments()
+    /* public function getAppointments()
     {
         try {
             $appointments = Appointment::all();
@@ -82,72 +82,61 @@ class AppointmentController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error cancellig an appointment: '], 500);
         }
-    }
+    }*/
 
-    public function AppointmentsAvailable(Request $request)
+    public function availableHours(Request $request)
     {
         try {
-            $date = $request->input('date');
 
-            $hoursAvailable = $this->getHoursAvailable($date);
+            $selectedDate = $request->input('date');
+
+
+            $date = Carbon::createFromFormat('Y-m-d', $selectedDate);
+
+            $existingAppointments = Appointment::whereDate('date', $date)->pluck('date');
+
+            $bookedHours = [];
+
+            foreach ($existingAppointments as $date ) {
+                $hour=explode(" ", $date)[1];
+                $bookedHours = array_push($bookedHours, $hour);
+            }
+                                            //ejemlo 2024-05-04 10:00:00 
+
+            $allHours = [];
+            $startHour = Carbon::parse('10:00:00');
+            $endHour = Carbon::parse('20:00:00');
+            $interval = 30;
+            $currentHour = $startHour->copy();
+            while ($currentHour < $endHour) {
+
+                if (!$existingAppointments->contains($currentHour)) {
+                    $allHours[] = $currentHour->format('HH:MM:ss');
+                }
+
+                $currentHour->addMinutes($interval);
+            }
+            //aqui las tienes todas
+            //$availableHours - $horas; esto no se hace asi
+
             
-            return $hoursAvailable;
+            unset($allHours[8]); 
+            unset($allHours[9]); 
+            unset($allHours[10]); 
+            unset($allHours[11]); 
 
+            $finallyAvailableHours = array_diff($allHours, $bookedHours);
+
+
+            return view('timeSelection', ['finallyAvailableHours' => $finallyAvailableHours]);
         } catch (\Exception $e) {
+
             return view('error');
         }
     }
-    public function getHoursAvailable($date)
+
+    public function timeSelection()
     {
-        try {
-            $morningHours = ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30'];
-            $afternoonHours = ['16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
-
-            $appointments = Appointment::whereDate('date', $date)->get();
-
-            $bookedHours = $appointments->pluck('hour')->toArray();
-            
-            $availableHours = [];
-
-            foreach ($morningHours as $hour) {
-                if (!in_array($hour, $bookedHours)) {
-                    $availableHours[] = $hour;
-                }
-            }
-
-            foreach ($afternoonHours as $hour) {
-                if (!in_array($hour, $bookedHours)) {
-                    $availableHours[] = $hour;
-                }
-            }
-
-            return $availableHours;
-        } catch (\Exception $e) {
-            return [];
-        }
-    }
-
-    /*public function getDaysAvailable()
-    {
-        try {
-            $daysAvailable = [];
-            $today = Carbon::now();
-            $weekend = $today->copy()->endOfWeek();
-
-            while ($today->lte($weekend)) {
-                if ($today->isWeekday()) {
-                    $daysAvailable[] = $today->format('yyyy-mm-dd');
-                }
-                $today->addDay();
-            }
-
-            return $daysAvailable;
-        } catch (\Exception $e) {
-            return [];
-        }
-    }*/
-
-    public function timeSelection(){
         return view('timeSelection');
     }
 }

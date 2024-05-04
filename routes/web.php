@@ -29,9 +29,7 @@ Route::get('/daySelection', function () {
 
 Route::controller(AppointmentController::class)->group(function () {
 
-    Route::post('/appointments', 'AppointmentsAvailable');
-    Route::get('/appointments/{id}', 'getAppointmentById');
-    Route::put('/appointments/{id}', 'cancelAppointment');
+    Route::post('/appointment', 'availableHours');
     Route::get('/timeSelection', 'timeSelection');
 });
 
