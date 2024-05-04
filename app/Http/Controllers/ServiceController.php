@@ -50,10 +50,10 @@ class ServiceController extends Controller
             if ($services !== null) {
                 return view('services', ['services' => $services]);
             } else {
-                return response()->json(['error' => 'Error. No services'], 400);
+                return view('services', ['error' => 'Error. No services']);
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error getting services: ' . $e->getMessage()], 500);
+            return view('services', ['error' => 'Error. No services']);
         }
     }
 }

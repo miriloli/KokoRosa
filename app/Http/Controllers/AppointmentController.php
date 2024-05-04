@@ -9,7 +9,96 @@ use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
-    /* public function getAppointments()
+
+    
+
+    //TODO Arreglar tooodas las vistas para que se vean bonitas (welcomeKokoRosa, login, signup, profile, services. dayselection, timeselection, confirmation, citacreadaconexito)
+
+    //TODO Hacer que la cita creada para un usuario, aparezca en el apartado "tus citas"
+
+    //TODO Arreeglar el tema de que cuando se hace click en una hora disponible no navega hasta la vista "confirmation" (404)
+
+    //TODO crear confirmacion de cita y recordatorio que llegueN al email del usuario.
+
+    //TODO Eliminar todo lo que no se vaya a usar para que el proyecto quede más limpio.
+
+    //TODO Hay que gestionar bien el tema de que el usuario seleccione una fecha el fin de semana
+    //si bien el programa no deja selecionar el finde, tampoco hace nada de momento, y el problema es que una vez que
+    // se ha seleccionado un dia del fin de semana, cuando se va a intentar elegir otra fecha, ya no funciona, 
+    //ya no devuelve horas.
+
+
+    public function availableHours(Request $request)
+    {
+        try {
+
+            //Obtenemos la fecha seleccionada del calendario del fichero HTML
+            $selectedDate = $request->input('date');
+
+            // Convertimos la fecha seleccionada a un objeto Carbon para obtener el día de la semana
+            $selectedDateTime = Carbon::parse($selectedDate);
+            $dayOfWeek = $selectedDateTime->dayOfWeek;
+
+            // Verificar si la fecha seleccionada es un sábado (día 6) o un domingo (día 0)
+            if ($dayOfWeek === Carbon::SATURDAY || $dayOfWeek === Carbon::SUNDAY) {
+
+                // mostrar un mensaje indicando que no se pueden pedir citas los fines de semana
+                return redirect()->back()->with('error', 'No se pueden pedir citas los fines de semana.');
+            }
+
+
+            //Usamos Eloquent para buscar todas las citas existentes en la base de datos para la fecha seleccionada y extraer solo las fechas como un array
+            $existingAppointments = Appointment::whereDate('date', $selectedDate)->pluck('date');
+
+            //Iteramos sobre la colección de fechas existentes y convertimos cada una en una cadena de hora utilizando Carbon. Esta línea crea una colección de las horas reservadas.
+            $bookedHours = $existingAppointments->map(function ($dateTime) {
+                return Carbon::parse($dateTime)->format('H:i:s');
+            });
+
+            //Creamos un rango de horas desde las 10:00 hasta las 20:00 con un intervalo de 30 min
+            $allHours = [];
+            $startHour = Carbon::parse('10:00:00');
+            $endHour = Carbon::parse('20:00:00');
+            $interval = 30;
+            $currentHour = $startHour->copy();
+
+            //Usamos un bucle while para crear un array $allHours con todas las horas dentro del rango especificado.
+            while ($currentHour < $endHour) {
+                $allHours[] = $currentHour->format('H:i:s');
+                $currentHour->addMinutes($interval);
+            }
+
+            // Eliminamos las horas donde no se trabaja (de 14:00 a 16:00)
+            unset($allHours[8]);
+            unset($allHours[9]);
+            unset($allHours[10]);
+            unset($allHours[11]);
+
+            // Filtramos las horas disponibles
+            $finallyAvailableHoursWithSeconds = array_diff($allHours, $bookedHours->toArray());
+
+            //Eliminamos los segundos para que se vea mas limpio en la vista
+            $finallyAvailableHours = array_map(function ($hour) {
+
+                return substr($hour, 0, 5); // Eliminamos los últimos tres caracteres (segundos)
+            }, $finallyAvailableHoursWithSeconds);
+
+            return view('timeSelection', ['finallyAvailableHours' => $finallyAvailableHours]);
+
+        } catch (\Exception $e) {
+
+            return view('error');
+        }
+    }
+
+    public function timeSelection()
+    {
+        return view('timeSelection');
+    }
+}
+
+
+/* public function getAppointments()
     {
         try {
             $appointments = Appointment::all();
@@ -83,60 +172,3 @@ class AppointmentController extends Controller
             return response()->json(['error' => 'Error cancellig an appointment: '], 500);
         }
     }*/
-
-    public function availableHours(Request $request)
-    {
-        try {
-
-            $selectedDate = $request->input('date');
-
-
-            $date = Carbon::createFromFormat('Y-m-d', $selectedDate);
-
-            $existingAppointments = Appointment::whereDate('date', $date)->pluck('date');
-
-            $bookedHours = [];
-
-            foreach ($existingAppointments as $date ) {
-                $hour=explode(" ", $date)[1];
-                $bookedHours = array_push($bookedHours, $hour);
-            }
-                                            //ejemlo 2024-05-04 10:00:00 
-
-            $allHours = [];
-            $startHour = Carbon::parse('10:00:00');
-            $endHour = Carbon::parse('20:00:00');
-            $interval = 30;
-            $currentHour = $startHour->copy();
-            while ($currentHour < $endHour) {
-
-                if (!$existingAppointments->contains($currentHour)) {
-                    $allHours[] = $currentHour->format('HH:MM:ss');
-                }
-
-                $currentHour->addMinutes($interval);
-            }
-            //aqui las tienes todas
-            //$availableHours - $horas; esto no se hace asi
-
-            
-            unset($allHours[8]); 
-            unset($allHours[9]); 
-            unset($allHours[10]); 
-            unset($allHours[11]); 
-
-            $finallyAvailableHours = array_diff($allHours, $bookedHours);
-
-
-            return view('timeSelection', ['finallyAvailableHours' => $finallyAvailableHours]);
-        } catch (\Exception $e) {
-
-            return view('error');
-        }
-    }
-
-    public function timeSelection()
-    {
-        return view('timeSelection');
-    }
-}

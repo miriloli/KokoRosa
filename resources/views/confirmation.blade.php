@@ -54,7 +54,7 @@
         </div>
 
         <div class="text-center py-3 my-3">
-            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" style="">
+            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" >
             <p>
                 <a class="btn btn-lg btn-dark btn-cita" href="" role="button">Pedir cita</a>
             </p>

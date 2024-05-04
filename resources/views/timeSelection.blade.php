@@ -51,25 +51,21 @@
         </div>
 
         <div class="text-center py-3 my-3">
-            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" style="">
+            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128">
 
         </div>
         <div class="container mt-5">
 
 
             <div class="form-group">
-                <label for="datetimepicker">Seleccionar Fecha y Hora:</label>
-                <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-                    <input id="date" type="date" class="form-control datetimepicker-input" data-target="#datetimepicker" />
-                    <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
+                <label >Seleccionar Hora:</label>
+                
             </div>
 
             @foreach ($finallyAvailableHours as $hour)
-            <p>{{ $hour }}</p>
+            <p><a href="./confirmation" role="button">{{ $hour }}</a></p>
             @endforeach
+            
 
         </div>
 

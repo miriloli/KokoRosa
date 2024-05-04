@@ -55,13 +55,13 @@
         </div>
 
         <div class="text-center py-3 my-3">
-            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" style="">
+            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" >
 
         </div>
         <div>
             @foreach ($services as $serv)
             <p>
-                <a href="./daySelection" role="button">{{$serv->name}}</a>
+                <a href="./daySelection" role="button">{{$serv->name}} - {{$serv->price}}€</a>
             </p>
             @endforeach
         </div>

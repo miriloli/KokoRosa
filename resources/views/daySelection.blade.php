@@ -51,14 +51,14 @@
         </div>
 
         <div class="text-center py-3 my-3">
-            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" style="">
+            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" >
 
         </div>
         <div class="container mt-5">
 
 
             <div class="form-group">
-                <label for="datetimepicker">Seleccionar Fecha y Hora:</label>
+                <label for="datetimepicker">Seleccionar Fecha:</label>
                 <div class="input-group date" id="datetimepicker" data-target-input="nearest">
                     <input id="date" type="date" class="form-control datetimepicker-input" data-target="#datetimepicker" />
                     <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">

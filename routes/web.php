@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ServiceController;
-//use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\CustomerController;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcomeKokoRosa');
-});
+}); 
 
 
 Route::controller(ServiceController::class)->group(function () {
