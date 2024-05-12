@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title></title>
 
     <!-- Fonts -->
@@ -17,11 +17,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <style>
-        .rosita {
-            background-color: #ffd7ff;
-            color: #FFFFFF;
-        }
-
         .border {
             border: 1px solid black;
             height: 150px;
@@ -47,7 +42,7 @@
                         <a class="nav-link" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./appointments">Tus citas</a>
+                        <a class="nav-link" href="./yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>
@@ -55,13 +50,13 @@
         </div>
 
         <div class="text-center py-3 my-3">
-            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" >
+            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128">
 
         </div>
         <div>
             @foreach ($services as $serv)
             <p>
-                <a href="./daySelection" role="button">{{$serv->name}} - {{$serv->price}}€</a>
+                <a class="services" role="button">{{$serv->name}} - {{$serv->price}}€</a>
             </p>
             @endforeach
         </div>
@@ -72,5 +67,39 @@
 
     </div> <!-- /container -->
 
+    <script>
+        let buttonServices = document.getElementsByClassName('services');
+        let buttonServicesArray = Array.from(buttonServices);
+        buttonServicesArray.forEach(element => {
+            element.addEventListener('click', function() {
+
+                localStorage.setItem('selectedService', element.innerText.split('-')[0].trim());
+
+                fetch('/daySelection', {
+                    method: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        service: element.innerText.split('-')[0].trim()
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        console.error('Error en la solicitud:', response.statusText);
+                        return response.text();
+                    }
+                }).then(data => {
+                    document.open();
+                    document.write(data);
+                    document.close();
+                }).catch(error => {
+                    console.error('Error en el fetch:', error);
+                });
+            })
+        });
+    </script>
 
 </body>

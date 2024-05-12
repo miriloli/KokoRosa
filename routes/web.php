@@ -10,26 +10,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcomeKokoRosa');
-}); 
+});
 
 
 Route::controller(ServiceController::class)->group(function () {
 
     Route::get('/services', 'getServicesView');
-    Route::get('/services/{id}', 'getServiceById');
 });
 Route::controller(CustomerController::class)->group(function () {
 
     Route::get('/profile', 'getCustomerById');
 });
-Route::get('/daySelection', function () {
-    return view('daySelection');
-});
 
 Route::controller(AppointmentController::class)->group(function () {
 
     Route::post('/appointment', 'availableHours');
-    Route::get('/timeSelection', 'timeSelection');
+    Route::post('/confirmation', 'getConfirmation');
+    Route::post('/daySelection', 'getDaySelection');
+    Route::post('/createAppointment', 'createAppointment');
 });
 
 Route::controller(ReminderController::class)->group(function () {

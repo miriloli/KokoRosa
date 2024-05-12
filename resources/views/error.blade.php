@@ -43,7 +43,7 @@
                         <a class="nav-link" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./appointments">Tus citas</a>
+                        <a class="nav-link" href="./yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>
@@ -70,25 +70,6 @@
             <p>The selected date is not available for appointments.</p>
         </div>
 
-
-        <!--<script>
-            const inputDate = document.getElementById('date');
-            const buttonConfirmation = document.getElementById('btn-submit');
-            buttonConfirmation.addEventListener('click', function() {
-                let date = inputDate.value;
-                fetch('/appointments', {
-                    method: 'POST',
-                    headers: {
-                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-                        'Content-Type': 'application/json'
-
-                    },
-                    body: JSON.stringify({
-                        appointmentDate: date
-                    })
-                }).then(response => console.log(response));
-            })
-        </script>-->
 
 
         <footer class="footer">

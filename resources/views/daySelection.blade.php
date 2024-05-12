@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title></title>
+    <title>Selecciona fecha y hora</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -43,7 +43,7 @@
                         <a class="nav-link" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./appointments">Tus citas</a>
+                        <a class="nav-link" href="./yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>
@@ -51,7 +51,7 @@
         </div>
 
         <div class="text-center py-3 my-3">
-            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" >
+            <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128">
 
         </div>
         <div class="container mt-5">
@@ -59,56 +59,110 @@
 
             <div class="form-group">
                 <label for="datetimepicker">Seleccionar Fecha:</label>
+
                 <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+
                     <input id="date" type="date" class="form-control datetimepicker-input" data-target="#datetimepicker" />
+
                     <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
                 </div>
             </div>
 
+            @if(isset($error))
+            <div class="alert alert-danger">{{ $error }}</div>
+            @endif
 
-
+            @if (isset($finallyAvailableHours))
 
             <div id="availableHoursContainer">
+                <div class="form-group">
+                    <label>Seleccionar Hora:</label>
+                </div>
 
+                @foreach ($finallyAvailableHours as $hour)
+                <p>
+                    <a class="hours" role="button">{{ $hour }}</a>
+                </p>
+                @endforeach
             </div>
+            @endif
 
         </div>
 
 
         <script>
-            const inputDate = document.getElementById('date');
+            var service;
+            var selectedDate;
 
-            inputDate.addEventListener('change', function() {
-                let date = inputDate.value;
+            document.addEventListener('DOMContentLoaded', function() {
+                var inputDate = document.getElementById('date');
 
-                fetch('/appointment', {
+                inputDate.addEventListener('input', function() {
+                    let date = inputDate.value;
+                    selectedDate = date.split('-').reverse().join('-');
+                    fetch('/appointment', {
+                        method: 'POST',
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            date: date
+                        })
+                    }).then(response => {
+                        if (response.ok) {
 
-                    method: 'POST',
-                    headers: {
-                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-                        'Content-Type': 'application/json'
+                            return response.text();
+                        } else {
+                            console.error('Error en la solicitud:', response.statusText);
+                        }
+                    }).then(data => {
+                        document.open();
+                        document.write(data);
+                    }).catch(error => {
+                        console.error('Error en el fetch:', error);
+                    });
+                });
+            });
 
-                    },
-                    body: JSON.stringify({
-                        date: date
-                    })
-                }).then(response => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        console.error('Error en la solicitud:', response.statusText);
-                    }
-                }).then(data => {
-                    
-                    document.open();
-                    document.write(data);
-                    document.close();
+
+            var buttonHours = document.getElementsByClassName('hours');
+            buttonHours = Array.from(buttonHours);
+            buttonHours.forEach(element => {
+                element.addEventListener('click', function() {
+
+                    let selectedService = localStorage.getItem('selectedService');
+
+                    fetch('/confirmation', {
+                        method: 'POST',
+                        headers: {
+                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            hour: element.innerText.trim(),
+                            service: selectedService,
+                            date: selectedDate
+                        })
+                    }).then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            console.error('Error en la solicitud:', response.statusText);
+                        }
+                    }).then(data => {
+                        document.open();
+                        document.write(data);
+                        document.close();
+                    }).catch(error => {
+                        console.error('Error en el fetch:', error);
+                    });
                 });
             });
         </script>
-
 
         <footer class="footer">
             <p>© KokoRosa 2024</p>

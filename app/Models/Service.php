@@ -9,4 +9,8 @@ class Service extends Model
 {
     use HasFactory;
     public $timestamps=false;
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

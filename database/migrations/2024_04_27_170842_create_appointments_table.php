@@ -19,8 +19,6 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Employee::class);
             $table->foreignIdFor(\App\Models\Service::class);
 
-
-            
         });
     }
 

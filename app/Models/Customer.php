@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
-    public $timestamps=false;
+    public $timestamps = false;
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

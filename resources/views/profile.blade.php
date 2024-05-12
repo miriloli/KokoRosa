@@ -43,7 +43,7 @@
                         <a class="nav-link" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./appointments">Tus citas</a>
+                        <a class="nav-link" href="./yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>
