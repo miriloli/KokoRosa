@@ -34,7 +34,6 @@ class AppointmentController extends Controller
             //Obtenemos la fecha seleccionada del calendario del fichero HTML
             $selectedDate = $request->input('date');
 
-
             // Convertimos la fecha seleccionada a un objeto Carbon para obtener el día de la semana
             $selectedDateTime = Carbon::parse($selectedDate);
             $dayOfWeek = $selectedDateTime->dayOfWeek;
@@ -74,7 +73,6 @@ class AppointmentController extends Controller
 
             // Filtramos las horas disponibles
             $finallyAvailableHours = array_diff($allHours, $bookedHours->toArray());
-
             
             if ($error != null) {
 
@@ -113,16 +111,17 @@ class AppointmentController extends Controller
         $customer = $request->user();
         $service = $request->input('service');
         $date = $request->input('date');
+        $selectedDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $date);
         $service = Service::where('name', $service)->first();
         $employee = Employee::find(1);
 
 
         $appointment = new Appointment();
         $appointment->cancelled = false;
-        $appointment->date = $date;
-        $appointment->customer = $customer->id;
-        $appointment->service = $service->id;
-        $appointment->employee = $employee->id;
+        $appointment->date = $selectedDateTime;
+        $appointment->customer()->associate($customer);
+        $appointment->service()->associate($service);
+        $appointment->employee()->associate($employee);
         $appointment->save();
         return view('yourAppointments', ['appointment' => $appointment->date]);
     }

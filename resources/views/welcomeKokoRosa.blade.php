@@ -13,28 +13,28 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="container-fluid row">
 
-    <div class="text-center py-3 my-3">
-        <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128" style="">
+    <div class="text-center py-3 mt-4 col-12">
+        <img class="rounded-circle my-3" src="{{url('assets/logo.png')}}" height="128" width="128" style="">
 
     </div>
 
-    <div class="text-center py-3 my-3">
-        <header class="">
+    <div class="text-center py-3 col-12">
+        <header class="container">
 
             @if (Route::has('login'))
-            <nav class="">
+            <nav class="row ">
                 @auth
-                <a href="{{ url('/home') }}" class="">
+                <a href="{{ url('/home') }}" class="col-12">
                 </a>
                 @else
-                <a href="{{ route('login') }}" class="">
+                <a href="{{ route('login') }}" class="btn btn-dark btn-block offset-3 col-6  offset-sm-3 col-sm-6 offset-md-4 col-md-4 mt-4 rounded-pill" style="height: 45px;">
                     Acceder
                 </a>
 
                 @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="">
+                <a href="{{ route('register') }}" class="btn btn-dark btn-block offset-3 col-6  offset-sm-3 col-sm-6 offset-md-4 col-md-4 mt-4 rounded-pill" style="height: 45px;">
                     Registrarse
                 </a>
                 @endif

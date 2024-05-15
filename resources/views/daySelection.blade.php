@@ -62,7 +62,7 @@
 
                 <div class="input-group date" id="datetimepicker" data-target-input="nearest">
 
-                    <input id="date" type="date" class="form-control datetimepicker-input" data-target="#datetimepicker" />
+                    <input id="date" type="date" class="form-control datetimepicker-input" data-target="#datetimepicker" @if(isset($date)) value="{{$date}}" @endif />
 
                     <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
 
@@ -84,7 +84,7 @@
 
                 @foreach ($finallyAvailableHours as $hour)
                 <p>
-                    <a class="hours" role="button">{{ $hour }}</a>
+                    <a class="hours" role="button">{{ substr($hour, 0, 5) }}</a>
                 </p>
                 @endforeach
             </div>
@@ -135,7 +135,6 @@
                 element.addEventListener('click', function() {
 
                     let selectedService = localStorage.getItem('selectedService');
-
                     fetch('/confirmation', {
                         method: 'POST',
                         headers: {
@@ -143,7 +142,7 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            hour: element.innerText.trim(),
+                            hour: element.innerText.trim()+':00',
                             service: selectedService,
                             date: selectedDate
                         })

@@ -9,6 +9,8 @@ class Appointment extends Model
 {
     use HasFactory;
 
+    public $timestamps = false; // Eliminar marcas de tiempo
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);

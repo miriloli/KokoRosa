@@ -79,8 +79,7 @@
             date = date.split(':')[1].trim().split('-').reverse().join('-');
             hour = hour.split(':');
             hour.shift();
-            hour.join(':');
-            date = date + ' ' + hour;
+            date = date + ' ' + hour.join(':');
             console.log(service, '', date);
             fetch('/createAppointment', {
                 method: 'POST',
