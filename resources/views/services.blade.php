@@ -35,14 +35,14 @@
         <div class="header clearfix">
             <nav>
                 <ul class="nav nav-pills float-right">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="./home">Inicio <span class="sr-only">(current)</span></a>
+                    <li class="nav-item mx-2">
+                        <a class="btn btn-dark nav-link rounded active" href="./home">Inicio <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./profile">Perfil</a>
+                    <li class="nav-item mx-2">
+                        <a class="btn btn-dark nav-link rounded active" href="./profile">Perfil</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./yourAppointments">Tus citas</a>
+                    <li class="nav-item mx-2">
+                        <a class="btn btn-dark nav-link rounded active" href="./yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>
@@ -53,15 +53,15 @@
             <img class="rounded-circle mb-3" src="{{url('assets/logo.png')}}" height="128" width="128">
 
         </div>
-        <div>
+        <div class="container-fluid">
             @foreach ($services as $serv)
-            <p>
-                <a class="services" role="button">{{$serv->name}} - {{$serv->price}}€</a>
+            <p class="d-flex flex-row justify-content-start">
+                <a class="services offset-3 col-6 d-flex justify-content-between" style="text-decoration: none" role="button"><span class="">{{$serv->name}}</span>  <span class="">{{$serv->price}}€</span></a>
             </p>
             @endforeach
         </div>
 
-        <footer class="footer">
+        <footer class="footer row fixed-bottom justify-content-center">
             <p>© KokoRosa 2024</p>
         </footer>
 

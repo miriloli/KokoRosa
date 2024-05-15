@@ -36,13 +36,13 @@
         <div class="header clearfix">
             <nav>
                 <ul class="nav nav-pills float-right">
-                    <li class="nav-item m-1">
+                    <li class="nav-item mx-2">
                         <a class="btn btn-dark nav-link active rounded" href="./">Inicio <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item m-1">
+                    <li class="nav-item mx-2">
                         <a class="btn btn-dark nav-link active rounded" href="./profile">Perfil</a>
                     </li>
-                    <li class="nav-item m-1">
+                    <li class="nav-item mx-2">
                         <a class="btn btn-dark nav-link active rounded" href="./yourAppointments">Tus citas</a>
                     </li>
                 </ul>
