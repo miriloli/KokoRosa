@@ -29,12 +29,12 @@
                 <a href="{{ url('/home') }}" class="col-12">
                 </a>
                 @else
-                <a href="{{ route('login') }}" class="btn btn-dark btn-block offset-3 col-6  offset-sm-3 col-sm-6 offset-md-4 col-md-4 mt-4 rounded-pill" style="height: 45px;">
+                <a href="{{ route('login') }}" class="btn btn-dark btn-block offset-3 col-6 offset-sm-3 col-sm-6 offset-md-4 col-md-4 mt-4 rounded-pill" style="height: 45px;">
                     Acceder
                 </a>
 
                 @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="btn btn-dark btn-block offset-3 col-6  offset-sm-3 col-sm-6 offset-md-4 col-md-4 mt-4 rounded-pill" style="height: 45px;">
+                <a href="{{ route('register') }}" class="btn btn-dark btn-block offset-3 col-6 offset-sm-3 col-sm-6 offset-md-4 col-md-4 mt-4 rounded-pill" style="height: 45px;">
                     Registrarse
                 </a>
                 @endif
