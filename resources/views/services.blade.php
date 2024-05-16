@@ -56,7 +56,7 @@
         <div class="container-fluid">
             @foreach ($services as $serv)
             <p class="d-flex flex-row justify-content-start">
-                <a class="services offset-3 col-6 d-flex justify-content-between" style="text-decoration: none" role="button"><span class="">{{$serv->name}}</span>  <span class="">{{$serv->price}}€</span></a>
+                <a class="services offset-3 col-6 d-flex justify-content-between" style="text-decoration: none" role="button"><span id="elegido" class="">{{$serv->name}}</span>  <span class="">{{$serv->price}}€</span></a>
             </p>
             @endforeach
         </div>
@@ -70,10 +70,11 @@
     <script>
         let buttonServices = document.getElementsByClassName('services');
         let buttonServicesArray = Array.from(buttonServices);
+        let servicioElegido = document.getElementById('elegido').innerText;
         buttonServicesArray.forEach(element => {
             element.addEventListener('click', function() {
 
-                localStorage.setItem('selectedService', element.innerText.split('-')[0].trim());
+                localStorage.setItem('selectedService', servicioElegido);
 
                 fetch('/daySelection', {
                     method: 'POST',
