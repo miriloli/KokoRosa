@@ -28,6 +28,7 @@ Route::controller(AppointmentController::class)->group(function () {
     Route::post('/confirmation', 'getConfirmation');
     Route::post('/daySelection', 'getDaySelection');
     Route::post('/createAppointment', 'createAppointment');
+    Route::get('/yourAppointments','createAppointment');
 });
 
 Route::controller(ReminderController::class)->group(function () {

@@ -62,7 +62,7 @@
             <p id="hour">Hora Escogida: {{ $hour }}</p>
 
             <p>
-                <a class="btn btn-lg btn-dark btn-cita" href="./yourAppointments" role="button">Confirmar</a>
+                <a class="btn btn-lg btn-dark btn-cita" href="./yourAppointments" role="button" id="confirmation">Confirmar</a>
             </p>
 
         </div>
@@ -81,26 +81,28 @@
             hour.shift();
             date = date + ' ' + hour.join(':');
             console.log(service, '', date);
-            fetch('/createAppointment', {
-                method: 'POST',
-                headers: {
-                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+            var button = document.getElementById('confirmation');
+            button.addEventListener('click', function() {
+                fetch('/createAppointment', {
+                    method: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
 
-                    date: date,
-                    service: service
-
-                })
-            }).then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    console.error('Error en la solicitud:', response.statusText);
-                }
-            }).catch(error => {
-                console.error('Error en el fetch:', error);
+                        date: date,
+                        service: service
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        console.error('Error en la solicitud:', response.statusText);
+                    }
+                }).catch(error => {
+                    console.error('Error en el fetch:', error);
+                });
             });
         </script>
 
