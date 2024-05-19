@@ -62,7 +62,8 @@
             <p id="hour">Hora Escogida: {{ $hour }}</p>
 
             <p>
-                <a class="btn btn-lg btn-dark btn-cita" href="./yourAppointments" role="button" id="confirmation">Confirmar</a>
+                <a class="btn btn-lg btn-dark btn-cita" role="button" id="confirmation">Confirmar</a>
+                <a class="btn btn-lg btn-dark btn-cita" role="button" id="confirmation">Cancelar</a>
             </p>
 
         </div>
@@ -80,7 +81,6 @@
             hour = hour.split(':');
             hour.shift();
             date = date + ' ' + hour.join(':');
-            console.log(service, '', date);
             var button = document.getElementById('confirmation');
             button.addEventListener('click', function() {
                 fetch('/createAppointment', {
@@ -90,7 +90,6 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-
                         date: date,
                         service: service
                     })
@@ -100,6 +99,11 @@
                     } else {
                         console.error('Error en la solicitud:', response.statusText);
                     }
+                }).then(data => {
+                        document.open();
+                        document.write(data);
+                        document.close();
+
                 }).catch(error => {
                     console.error('Error en el fetch:', error);
                 });

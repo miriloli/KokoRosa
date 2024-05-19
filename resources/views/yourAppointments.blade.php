@@ -9,9 +9,12 @@
 
 <body>
     <p>
-        {{$appointment}}
-        HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        {{$appointment->service->name}}
     </p>
+    <p>
+        {{$appointment->date}}
+    </p>
+    @dump($service)
 </body>
 
 </html>

@@ -120,6 +120,7 @@
                     }).then(data => {
                         document.open();
                         document.write(data);
+                        document.close();
                     }).catch(error => {
                         console.error('Error en el fetch:', error);
                     });
@@ -131,7 +132,6 @@
             buttonHours = Array.from(buttonHours);
             buttonHours.forEach(element => {
                 element.addEventListener('click', function() {
-
                     let selectedService = localStorage.getItem('selectedService');
                     fetch('/confirmation', {
                         method: 'POST',

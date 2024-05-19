@@ -12,7 +12,6 @@ Route::get('/', function () {
     return view('welcomeKokoRosa');
 });
 
-
 Route::controller(ServiceController::class)->group(function () {
 
     Route::get('/services', 'getServicesView');

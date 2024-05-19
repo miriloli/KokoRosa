@@ -19,12 +19,6 @@ class AppointmentController extends Controller
 
     //TODO Eliminar todo lo que no se vaya a usar para que el proyecto quede más limpio.
 
-    //TODO Arreglar tooodas las vistas para que se vean bonitas (welcomeKokoRosa, login, signup, profile, services. dayselection, timeselection, confirmation, citacreadaconexito)
-
-    //TODO Hay que gestionar bien el tema de que el usuario seleccione una fecha el fin de semana
-    //si bien el programa no deja selecionar el finde, tampoco hace nada de momento, y el problema es que una vez que
-    // se ha seleccionado un dia del fin de semana, cuando se va a intentar elegir otra fecha, ya no funciona, 
-    //ya no devuelve horas.
 
 
     public function availableHours(Request $request)
@@ -73,7 +67,7 @@ class AppointmentController extends Controller
 
             // Filtramos las horas disponibles
             $finallyAvailableHours = array_diff($allHours, $bookedHours->toArray());
-            
+
             if ($error != null) {
 
                 // Si hay un error, devuelve la vista con el mensaje de error
@@ -123,6 +117,6 @@ class AppointmentController extends Controller
         $appointment->service()->associate($service);
         $appointment->employee()->associate($employee);
         $appointment->save();
-        return view('yourAppointments', ['appointment' => $appointment->date]);
+        return view('yourAppointments', ['appointment' => $appointment, 'service' => $service]);
     }
 }
