@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title></title>
 
-    <!-- Fonts -->
+    
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
@@ -42,7 +42,7 @@
                         <a class="btn btn-dark nav-link rounded active" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="btn btn-dark nav-link rounded active" href="./yourAppointments">Tus citas</a>
+                        <a class="btn btn-dark nav-link rounded active" role="button" id="yourAppointments" id="yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>
@@ -65,12 +65,12 @@
             <p>© KokoRosa 2024</p>
         </footer>
 
-    </div> <!-- /container -->
+    </div> 
 
     <script>
         let buttonServices = document.getElementsByClassName('chosen');
         let buttonServicesArray = Array.from(buttonServices);
-       
+
         buttonServicesArray.forEach(element => {
             element.addEventListener('click', function() {
 
@@ -101,6 +101,32 @@
                 });
             })
         });
+    </script>
+    <script>
+        document.getElementById('yourAppointments').addEventListener('click',
+            function() {
+                fetch('/yourAppointments', {
+                    method: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        console.error('Error en la solicitud:', response.statusText);
+                        return response.text();
+                    }
+                }).then(data => {
+                    document.open();
+                    document.write(data);
+                    document.close();
+                }).catch(error => {
+                    console.error('Error en el fetch:', error);
+                });
+            }
+        );
     </script>
 
 </body>

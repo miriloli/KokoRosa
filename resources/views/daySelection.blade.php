@@ -43,7 +43,7 @@
                         <a class="btn btn-dark nav-link rounded active" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="btn btn-dark nav-link rounded active" href="./yourAppointments">Tus citas</a>
+                        <a class="btn btn-dark nav-link rounded active" id="yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>
@@ -62,7 +62,7 @@
 
                 <div class="input-group date" id="datetimepicker" data-target-input="nearest">
 
-                    <input id="date" type="date" class="form-control datetimepicker-input" data-target="#datetimepicker" @if(isset($date)) value="{{$date}}" @endif />
+                    <input min="{{ date("Y-m-d") }}" id="date" type="date" class="form-control datetimepicker-input" data-target="#datetimepicker" @if(isset($date)) value="{{$date}}" @endif />
 
                     <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
 
@@ -91,81 +91,108 @@
             @endif
 
         </div>
-     
-        <script>
-            var selectedDate;
-
-            document.addEventListener('DOMContentLoaded', function() {
-                var inputDate = document.getElementById('date');
-
-                inputDate.addEventListener('input', function() {
-                    let date = inputDate.value;
-                    selectedDate = date.split('-').reverse().join('-');
-                    fetch('/appointment', {
-                        method: 'POST',
-                        headers: {
-                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            date: date
-                        })
-                    }).then(response => {
-                        if (response.ok) {
-
-                            return response.text();
-                        } else {
-                            console.error('Error en la solicitud:', response.statusText);
-                        }
-                    }).then(data => {
-                        document.open();
-                        document.write(data);
-                        document.close();
-                    }).catch(error => {
-                        console.error('Error en el fetch:', error);
-                    });
-                });
-            });
 
 
-            var buttonHours = document.getElementsByClassName('hours');
-            buttonHours = Array.from(buttonHours);
-            buttonHours.forEach(element => {
-                element.addEventListener('click', function() {
-                    let selectedService = localStorage.getItem('selectedService');
-                    fetch('/confirmation', {
-                        method: 'POST',
-                        headers: {
-                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            hour: element.innerText.trim()+':00',
-                            service: selectedService,
-                            date: selectedDate
-                        })
-                    }).then(response => {
-                        if (response.ok) {
-                            return response.text();
-                        } else {
-                            console.error('Error en la solicitud:', response.statusText);
-                        }
-                    }).then(data => {
-                        document.open();
-                        document.write(data);
-                        document.close();
-                    }).catch(error => {
-                        console.error('Error en el fetch:', error);
-                    });
-                });
-            });
-        </script>
 
-        <footer class="footer">
+        <footer class="footer row fixed-bottom justify-content-center">
             <p>© KokoRosa 2024</p>
         </footer>
 
     </div> <!-- /container -->
 
+    <script>
+        var selectedDate;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var inputDate = document.getElementById('date');
+
+            inputDate.addEventListener('input', function() {
+                let date = inputDate.value;
+                selectedDate = date.split('-').reverse().join('-');
+                fetch('/appointment', {
+                    method: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        date: date
+                    })
+                }).then(response => {
+                    if (response.ok) {
+
+                        return response.text();
+                    } else {
+                        console.error('Error en la solicitud:', response.statusText);
+                    }
+                }).then(data => {
+                    document.open();
+                    document.write(data);
+                    document.close();
+                }).catch(error => {
+                    console.error('Error en el fetch:', error);
+                });
+            });
+        });
+
+
+        var buttonHours = document.getElementsByClassName('hours');
+        buttonHours = Array.from(buttonHours);
+        buttonHours.forEach(element => {
+            element.addEventListener('click', function() {
+                let selectedService = localStorage.getItem('selectedService');
+                fetch('/confirmation', {
+                    method: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        hour: element.innerText.trim() + ':00',
+                        service: selectedService,
+                        date: selectedDate
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        console.error('Error en la solicitud:', response.statusText);
+                    }
+                }).then(data => {
+                    document.open();
+                    document.write(data);
+                    document.close();
+                }).catch(error => {
+                    console.error('Error en el fetch:', error);
+                });
+            });
+        });
+    </script>
+    <script>
+        document.getElementById('yourAppointments').addEventListener('click',
+            function() {
+                fetch('/yourAppointments', {
+                    method: 'POST',
+                    headers: {
+                        "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        console.error('Error en la solicitud:', response.statusText);
+                        return response.text();
+                    }
+                }).then(data => {
+                    document.open();
+                    document.write(data);
+                    document.close();
+                }).catch(error => {
+                    console.error('Error en el fetch:', error);
+                });
+            }
+        );
+    </script>
 
 </body>

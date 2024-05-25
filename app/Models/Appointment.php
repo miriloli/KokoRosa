@@ -9,7 +9,7 @@ class Appointment extends Model
 {
     use HasFactory;
 
-    public $timestamps = false; // Eliminar marcas de tiempo
+    public $timestamps = false; 
 
     public function customer()
     {

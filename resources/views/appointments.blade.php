@@ -43,7 +43,7 @@
                         <a class="btn btn-dark nav-link rounded active" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="btn btn-dark nav-link rounded active" href="./yourAppointments">Tus citas</a>
+                        <a class="btn btn-dark nav-link rounded active" role="button" id="yourAppointments" >Tus citas</a>
                     </li>
                 </ul>
             </nav>
@@ -61,7 +61,7 @@
             <p>{{$appointment->name}}</p>
         @endforeach
        
-        <footer class="footer">
+        <footer class="footer row fixed-bottom justify-content-center">
             <p>© KokoRosa 2024</p>
         </footer>
 

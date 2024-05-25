@@ -16,7 +16,7 @@
 <body class="container-fluid row">
 
     <div class="text-center py-3 mt-4 col-12">
-        <img class="rounded-circle my-3" src="{{url('assets/logo.png')}}" height="128" width="128" >
+        <img class="rounded-circle my-3" src="{{url('assets/logo.png')}}" height="128" width="128">
 
     </div>
 

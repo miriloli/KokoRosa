@@ -13,7 +13,7 @@ class AppointmentController extends Controller
 {
 
 
-    //TODO Hacer que la cita creada para un usuario, aparezca en el apartado "tus citas"
+    //TODO Hacer que las citas se puedan eliminar
 
     //TODO crear confirmacion de cita y recordatorio que lleguen al email del usuario.
 
@@ -33,6 +33,7 @@ class AppointmentController extends Controller
             $dayOfWeek = $selectedDateTime->dayOfWeek;
 
             $error = null;
+
             // Verificar si la fecha seleccionada es un sábado (día 6) o un domingo (día 0)
             if ($dayOfWeek === Carbon::SATURDAY || $dayOfWeek === Carbon::SUNDAY) {
                 $error = 'No se pueden pedir citas los fines de semana.';
@@ -117,6 +118,35 @@ class AppointmentController extends Controller
         $appointment->service()->associate($service);
         $appointment->employee()->associate($employee);
         $appointment->save();
-        return view('yourAppointments', ['appointment' => $appointment, 'service' => $service]);
+        $appointments = Appointment::where('customer_id', '=', $customer->id)
+            ->where('cancelled', false)->get();
+
+        return view('yourAppointments', ['appointments' => $appointments]);
+    }
+
+    public function yourAppointments(Request $request)
+    {
+        $customer = $request->user();
+        $appointments = Appointment::where('customer_id', '=', $customer->id)
+            ->where('cancelled', false)->get();
+
+        return view('yourAppointments', ['appointments' => $appointments]);
+    }
+    public function deleteAppointment(Request $request)
+    {
+
+
+        $appointmentId = $request->input('appointment_id');
+        $customer = $request->user();
+
+        $appointment = Appointment::where('id', $appointmentId)
+            ->where('customer_id', $customer->id)
+            ->first();
+
+        if ($appointment) {
+            $appointment->cancelled = true;
+            $appointment->save();
+        } else {
+        }
     }
 }

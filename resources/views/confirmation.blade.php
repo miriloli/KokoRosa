@@ -23,7 +23,11 @@
         #service,
         #date,
         #hour {
-            font-weight: 900;
+            font-weight: 600;
+        }
+
+        #sure {
+            font-weight: 700;
         }
     </style>
 </head>
@@ -41,7 +45,7 @@
                         <a class="btn btn-dark nav-link rounded active" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="btn btn-dark nav-link rounded active" href="./yourAppointments">Tus citas</a>
+                        <a class="btn btn-dark nav-link rounded active" role="button" id="yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>
@@ -56,61 +60,87 @@
 
 
         <div class="text-center">
-            <h3>¿Estás seguro?</h3>
+            <h3 id="sure">¿Estás seguro?</h3>
             <p id="service">Servicio Escogido: {{ $service }}</p>
             <p id="date">Día Escogido: {{ $date }}</p>
             <p id="hour">Hora Escogida: {{ $hour }}</p>
 
             <p>
                 <a class="btn btn-lg btn-dark btn-cita" role="button" id="confirmation">Confirmar</a>
-                <a class="btn btn-lg btn-dark btn-cita" role="button" id="confirmation">Cancelar</a>
+                <a class="btn btn-lg btn-dark btn-cita" role="button" id="cancel">Cancelar</a>
             </p>
 
         </div>
 
-        <footer class="footer">
+        <footer class="footer row fixed-bottom justify-content-center">
             <p>© KokoRosa 2024</p>
         </footer>
 
-        <script>
-            var service = document.getElementById('service').innerHTML;
-            var date = document.getElementById('date').innerHTML;
-            var hour = document.getElementById('hour').innerHTML;
-            service = service.split(':')[1];
-            date = date.split(':')[1].trim().split('-').reverse().join('-');
-            hour = hour.split(':');
-            hour.shift();
-            date = date + ' ' + hour.join(':');
-            var button = document.getElementById('confirmation');
-            button.addEventListener('click', function() {
-                fetch('/createAppointment', {
+
+
+    </div> <!-- /container -->
+    <script>
+        var service = document.getElementById('service').innerHTML;
+        var date = document.getElementById('date').innerHTML;
+        var hour = document.getElementById('hour').innerHTML;
+        service = service.split(':')[1];
+        date = date.split(':')[1].trim().split('-').reverse().join('-');
+        hour = hour.split(':');
+        hour.shift();
+        date = date + ' ' + hour.join(':');
+        var button = document.getElementById('confirmation');
+        button.addEventListener('click', function() {
+            fetch('/createAppointment', {
+                method: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    date: date,
+                    service: service
+                })
+            }).then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    console.error('Error en la solicitud:', response.statusText);
+                }
+            }).then(data => {
+                document.open();
+                document.write(data);
+                document.close();
+
+            }).catch(error => {
+                console.error('Error en el fetch:', error);
+            });
+        });
+    </script>
+    <script>
+        document.getElementById('yourAppointments').addEventListener('click',
+            function() {
+                fetch('/yourAppointments', {
                     method: 'POST',
                     headers: {
                         "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        date: date,
-                        service: service
-                    })
+                    }
                 }).then(response => {
                     if (response.ok) {
                         return response.text();
                     } else {
                         console.error('Error en la solicitud:', response.statusText);
+                        return response.text();
                     }
                 }).then(data => {
-                        document.open();
-                        document.write(data);
-                        document.close();
-
+                    document.open();
+                    document.write(data);
+                    document.close();
                 }).catch(error => {
                     console.error('Error en el fetch:', error);
                 });
-            });
-        </script>
-
-    </div> <!-- /container -->
-
+            }
+        );
+    </script>
 
 </body>

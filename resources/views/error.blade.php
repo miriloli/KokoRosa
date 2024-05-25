@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title></title>
 
-    <!-- Fonts -->
+    
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
@@ -43,7 +43,7 @@
                         <a class="nav-link" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./yourAppointments">Tus citas</a>
+                        <a class="nav-link" href="./yourAppointments" role="button" id="yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>
@@ -72,7 +72,7 @@
 
 
 
-        <footer class="footer">
+        <footer class="footer row fixed-bottom justify-content-center">
             <p>© KokoRosa 2024</p>
         </footer>
 
