@@ -27,7 +27,7 @@ Route::controller(AppointmentController::class)->group(function () {
     Route::post('/confirmation', 'getConfirmation');
     Route::post('/daySelection', 'getDaySelection');
     Route::post('/createAppointment', 'createAppointment');
-    Route::post('/deleteAppointment', 'deleteAppointment');
+    Route::post('/deleteAppointment', 'deleteAppointment')->name('deleteAppointment');
     Route::post('/yourAppointments', 'yourAppointments');
    
 });

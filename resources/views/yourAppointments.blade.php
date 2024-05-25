@@ -63,9 +63,14 @@
         @foreach($appointments as $appointment)
         <div class="container-fluid flex text-center">
             <p>{{ $appointment->service->name }} - {{ $appointment->date }}</p>
+            <form id="deleteAppointmentForm{{ $appointment->id }}" action="{{ route('deleteAppointment') }}" method="POST" style="display: none;">
+                @csrf
+                <input type="hidden" name="appointmentId" value="{{ $appointment->id }}">
+            </form>
 
-            <a role="button" id="deleteAppointments">Cancelar</a>
-
+            <a onclick="event.preventDefault(); document.getElementById('deleteAppointmentForm{{ $appointment->id }}').submit();">
+                Cancelar
+            </a>
         </div>
         @endforeach
 
@@ -91,30 +96,30 @@
             }
         );
 
-        document.getElementById('deleteAppointments').addEventListener('click',
-            function() {
-                fetch('/deleteAppointments', {
+        // document.getElementById('deleteAppointments').addEventListener('click',
+        //     function() {
+        //         fetch('/deleteAppointments', {
 
-                        method: 'POST',
-                        headers: {
+        //                 method: 'POST',
+        //                 headers: {
 
-                            "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            appointment_id: appointmentId
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log('Appointment deleted successfully');
-                        } else {
-                            console.error('Failed to delete appointment');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            })
+        //                     "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+        //                     'Content-Type': 'application/json'
+        //                 },
+        //                 body: JSON.stringify({
+        //                     appointment_id: appointmentId
+        //                 })
+        //             })
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 if (data.success) {
+        //                     console.log('Appointment deleted successfully');
+        //                 } else {
+        //                     console.error('Failed to delete appointment');
+        //                 }
+        //             })
+        //             .catch(error => console.error('Error:', error));
+        //     })
     </script>
 
 

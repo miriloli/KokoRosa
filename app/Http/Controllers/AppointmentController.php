@@ -13,8 +13,6 @@ class AppointmentController extends Controller
 {
 
 
-    //TODO Hacer que las citas se puedan eliminar
-
     //TODO crear confirmacion de cita y recordatorio que lleguen al email del usuario.
 
     //TODO Eliminar todo lo que no se vaya a usar para que el proyecto quede más limpio.
@@ -135,18 +133,14 @@ class AppointmentController extends Controller
     public function deleteAppointment(Request $request)
     {
 
-
-        $appointmentId = $request->input('appointment_id');
+        $appointmentId = $request->input('appointmentId');
+        $appointment = Appointment::find($appointmentId);
+        $appointment->cancelled = true;
+        $appointment->save();
         $customer = $request->user();
+        $appointments = Appointment::where('customer_id', '=', $customer->id)
+            ->where('cancelled', false)->get();
 
-        $appointment = Appointment::where('id', $appointmentId)
-            ->where('customer_id', $customer->id)
-            ->first();
-
-        if ($appointment) {
-            $appointment->cancelled = true;
-            $appointment->save();
-        } else {
-        }
+        return view('yourAppointments', ['appointments' => $appointments]);
     }
 }
