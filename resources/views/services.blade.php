@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title></title>
+    <title>Servicios</title>
 
     
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -42,7 +42,7 @@
                         <a class="btn btn-dark nav-link rounded active" href="./profile">Perfil</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="btn btn-dark nav-link rounded active" role="button" id="yourAppointments" id="yourAppointments">Tus citas</a>
+                        <a class="btn btn-dark nav-link rounded active" role="button" id="yourAppointments">Tus citas</a>
                     </li>
                 </ul>
             </nav>

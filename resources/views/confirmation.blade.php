@@ -63,7 +63,7 @@
             <h3 id="sure">¿Estás seguro?</h3>
             <p id="service">Servicio Escogido: {{ $service }}</p>
             <p id="date">Día Escogido: {{ $date }}</p>
-            <p id="hour">Hora Escogida: {{ $hour }}</p>
+            <p id="hour">Hora Escogida: {{ substr($hour, 0, 5) }}</p>
 
             <p>
                 <a class="btn btn-lg btn-dark btn-cita" role="button" id="confirmation">Confirmar</a>
@@ -97,7 +97,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    date: date,
+                    date: date + ':00',
                     service: service
                 })
             }).then(response => {

@@ -36,8 +36,8 @@ class AppointmentController extends Controller
 
             //Usamos Eloquent para buscar todas las citas existentes en la base de datos para la fecha seleccionada y extraer solo las fechas como un array
             $existingAppointments = Appointment::whereDate('date', $selectedDate)
-                                                ->where('cancelled', false)
-                                                ->pluck('date');
+                ->where('cancelled', false)
+                ->pluck('date');
 
             //Iteramos sobre la colección de fechas existentes y convertimos cada una en una cadena de hora utilizando Carbon. Esta línea crea una colección de las horas reservadas.
             $bookedHours = $existingAppointments->map(function ($dateTime) {

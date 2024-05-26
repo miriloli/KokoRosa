@@ -77,13 +77,13 @@
 
             @if (isset($finallyAvailableHours))
 
-            <div id="availableHoursContainer">
-                <div class="form-group">
+            <div id="availableHoursContainer" class="container-fluid row offset-3 col-6 py-2">
+                <div class="form-group col-12">
                     <label>Seleccionar Hora:</label>
                 </div>
 
                 @foreach ($finallyAvailableHours as $hour)
-                <p>
+                <p class="col-6">
                     <a class="hours" role="button">{{ substr($hour, 0, 5) }}</a>
                 </p>
                 @endforeach

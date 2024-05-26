@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title></title>
+    <title>Tus citas</title>
 
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -27,13 +27,10 @@
             width: 170px;
         }
 
-        #date,
-        #service {
-            font-weight: 600;
-
-        }
-        #deleteAppointment{
+        #deleteAppointment {
             color: brown;
+            font-weight: 600;
+            cursor:pointer;
         }
     </style>
 </head>
@@ -64,18 +61,23 @@
         </div>
 
         @foreach($appointments as $appointment)
-        <div class="container-fluid flex text-center">
-            <p>{{ $appointment->service->name }} - {{ $appointment->date }}</p>
-            <form id="deleteAppointmentForm{{ $appointment->id }}" action="{{ route('deleteAppointment') }}" method="POST" style="display: none;">
-                @csrf
-                <input type="hidden" name="appointmentId" value="{{ $appointment->id }}">
-            </form>
+        <div class="container-fluid flex text-center card my-2" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ $appointment->service->name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{implode(' ', array_merge([implode('-', array_reverse(explode('-', explode(' ', substr($appointment->date, 0, 16))[0])))], array_slice(explode(' ', substr($appointment->date, 0, 16)), 1))) }}</h6>
 
-            <a id="deleteAppointment" onclick="event.preventDefault(); document.getElementById('deleteAppointmentForm{{ $appointment->id }}').submit();">
-                Cancelar cita
-            </a>
+                <form id="deleteAppointmentForm{{ $appointment->id }}" action="{{ route('deleteAppointment') }}" method="POST" style="display: none;">
+                    @csrf
+                    <input type="hidden" name="appointmentId" value="{{ $appointment->id }}">
+                </form>
+
+                <a class="card-link" id="deleteAppointment" onclick="event.preventDefault(); document.getElementById('deleteAppointmentForm{{ $appointment->id }}').submit();">
+                    Cancelar cita
+                </a>
+            </div>
         </div>
         @endforeach
+
 
 
         <footer class="footer row fixed-bottom justify-content-center">
@@ -88,41 +90,27 @@
         document.getElementById('yourAppointments').addEventListener('click',
             function() {
                 fetch('/yourAppointments', {
-
                     method: 'POST',
                     headers: {
-
                         "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
                         'Content-Type': 'application/json'
                     }
-                })
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        console.error('Error en la solicitud:', response.statusText);
+                        return response.text();
+                    }
+                }).then(data => {
+                    document.open();
+                    document.write(data);
+                    document.close();
+                }).catch(error => {
+                    console.error('Error en el fetch:', error);
+                });
             }
         );
-
-        // document.getElementById('deleteAppointments').addEventListener('click',
-        //     function() {
-        //         fetch('/deleteAppointments', {
-
-        //                 method: 'POST',
-        //                 headers: {
-
-        //                     "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-        //                     'Content-Type': 'application/json'
-        //                 },
-        //                 body: JSON.stringify({
-        //                     appointment_id: appointmentId
-        //                 })
-        //             })
-        //             .then(response => response.json())
-        //             .then(data => {
-        //                 if (data.success) {
-        //                     console.log('Appointment deleted successfully');
-        //                 } else {
-        //                     console.error('Failed to delete appointment');
-        //                 }
-        //             })
-        //             .catch(error => console.error('Error:', error));
-        //     })
     </script>
 
 

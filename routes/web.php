@@ -3,7 +3,6 @@
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ReminderController;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,10 +25,6 @@ Route::controller(ServiceController::class)->group(function () {
 
     Route::get('/services', 'getServicesView');
 });
-Route::controller(CustomerController::class)->group(function () {
-
-    Route::get('/profile', 'getCustomerById');
-});
 
 Route::controller(AppointmentController::class)->group(function () {
 
@@ -46,10 +41,6 @@ Route::controller(ReminderController::class)->group(function () {
     Route::post('/reminders', 'createReminder');
     Route::get('/reminders/{appointment_id}', 'getReminder');
 });
-
-
-
-
 
 
 require __DIR__ . '/auth.php';
