@@ -125,8 +125,7 @@ class AppointmentController extends Controller
     {
         $customer = $request->user();
         $appointments = Appointment::where('customer_id', '=', $customer->id)
-            ->where('cancelled', false)->get();
-
+            ->where('cancelled', false)->where('date', '>', Carbon::now())->get();
         return view('yourAppointments', ['appointments' => $appointments]);
     }
     public function deleteAppointment(Request $request)
