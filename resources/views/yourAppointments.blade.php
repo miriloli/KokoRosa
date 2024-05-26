@@ -32,6 +32,9 @@
             font-weight: 600;
 
         }
+        #deleteAppointment{
+            color: brown;
+        }
     </style>
 </head>
 
@@ -68,8 +71,8 @@
                 <input type="hidden" name="appointmentId" value="{{ $appointment->id }}">
             </form>
 
-            <a onclick="event.preventDefault(); document.getElementById('deleteAppointmentForm{{ $appointment->id }}').submit();">
-                Cancelar
+            <a id="deleteAppointment" onclick="event.preventDefault(); document.getElementById('deleteAppointmentForm{{ $appointment->id }}').submit();">
+                Cancelar cita
             </a>
         </div>
         @endforeach

@@ -39,10 +39,10 @@
             <nav>
                 <ul class="nav nav-pills float-right">
                     <li class="nav-item mx-2">
-                        <a class="btn btn-dark nav-link rounded active" href="./home">Inicio <span class="sr-only">(current)</span></a>
+                        <a class="btn btn-dark nav-link rounded active" href="/home">Inicio <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="btn btn-dark nav-link rounded active" href="./profile">Perfil</a>
+                        <a class="btn btn-dark nav-link rounded active" href="/profile">Perfil</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="btn btn-dark nav-link rounded active" role="button" id="yourAppointments">Tus citas</a>
@@ -67,7 +67,7 @@
 
             <p>
                 <a class="btn btn-lg btn-dark btn-cita" role="button" id="confirmation">Confirmar</a>
-                <a class="btn btn-lg btn-dark btn-cita" role="button" id="cancel">Cancelar</a>
+                <a class="btn btn-lg btn-dark btn-cita" role="button" href="/home" id="cancel">Cancelar</a>
             </p>
 
         </div>

@@ -57,7 +57,7 @@
         <div class="container mt-5">
 
 
-            <div class="form-group">
+            <div class="form-group offset-3 col-6">
                 <label for="datetimepicker">Seleccionar Fecha:</label>
 
                 <div class="input-group date" id="datetimepicker" data-target-input="nearest">

@@ -12,6 +12,16 @@ Route::get('/', function () {
     return view('welcomeKokoRosa');
 });
 
+Route::get('/home', function () {
+    return view('home');
+})->middleware(['auth', 'verified'])->name('home');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
 Route::controller(ServiceController::class)->group(function () {
 
     Route::get('/services', 'getServicesView');
@@ -29,7 +39,6 @@ Route::controller(AppointmentController::class)->group(function () {
     Route::post('/createAppointment', 'createAppointment');
     Route::post('/deleteAppointment', 'deleteAppointment')->name('deleteAppointment');
     Route::post('/yourAppointments', 'yourAppointments');
-   
 });
 
 Route::controller(ReminderController::class)->group(function () {
@@ -39,14 +48,8 @@ Route::controller(ReminderController::class)->group(function () {
 });
 
 
-Route::get('/home', function () {
-    return view('home');
-})->middleware(['auth', 'verified'])->name('home');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+
+
 
 require __DIR__ . '/auth.php';
