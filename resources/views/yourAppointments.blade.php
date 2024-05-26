@@ -61,10 +61,10 @@
         </div>
 
         @foreach($appointments as $appointment)
-        <div class="container-fluid flex text-center card my-2" style="width: 18rem;">
+        <div class="container-fluid flex text-center card shadow my-2" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">{{ $appointment->service->name }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{implode(' ', array_merge([implode('-', array_reverse(explode('-', explode(' ', substr($appointment->date, 0, 16))[0])))], array_slice(explode(' ', substr($appointment->date, 0, 16)), 1))) }}</h6>
+                <h5 class="card-title mt-1">{{implode(' ', array_merge([implode('-', array_reverse(explode('-', explode(' ', substr($appointment->date, 0, 16))[0])))], array_slice(explode(' ', substr($appointment->date, 0, 16)), 1))) }}</h5>
+                <h5 class="card-subtitle mb-2 font-weight-light my-1">{{ $appointment->service->name }}</h5>
 
                 <form id="deleteAppointmentForm{{ $appointment->id }}" action="{{ route('deleteAppointment') }}" method="POST" style="display: none;">
                     @csrf
@@ -77,7 +77,6 @@
             </div>
         </div>
         @endforeach
-
 
 
         <footer class="footer row fixed-bottom justify-content-center">
